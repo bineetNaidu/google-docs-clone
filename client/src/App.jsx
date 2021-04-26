@@ -1,11 +1,7 @@
-import './App.css';
+import TextEditor from './TextEditor';
 
 function App() {
-  return (
-    <div className="App">
-      <h1>GOOGLE DOCS CLONE</h1>
-    </div>
-  );
+  return <TextEditor />;
 }
 
 export default App;
