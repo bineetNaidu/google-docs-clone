@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "A server for google-docs-clone.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "author": "BineetNaidu <bineet.s.naidu@gmail.com> (https://bineetnaidu-io.web.app/)",
   "license": "MIT",
   "dependencies": {
+    "nodemon": "^2.0.7",
     "socket.io": "^4.0.1"
   }
 }
