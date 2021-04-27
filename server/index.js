@@ -8,9 +8,15 @@ const io = new Server(4242, {
 });
 
 io.on('connection', (socket) => {
-  socket.on('send-changes', (delta) => {
-    console.log(delta);
-    socket.broadcast.emit('receive-changes', delta);
+  socket.emit('get-document', (documentId) => {
+    const data = '';
+
+    socket.join(documentId);
+    socket.emit('load-document', data);
+
+    socket.on('send-changes', (delta) => {
+      socket.broadcast.to(documentId).emit('receive-changes', delta);
+    });
   });
 
   console.log('connected');
