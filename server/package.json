@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A server for google-docs-clone.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BineetNaidu <bineet.s.naidu@gmail.com> (https://bineetnaidu-io.web.app/)",
+  "license": "MIT",
+  "dependencies": {
+    "socket.io": "^4.0.1"
+  }
+}
