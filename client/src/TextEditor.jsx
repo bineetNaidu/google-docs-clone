@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Quill from 'quill';
-import { io } from 'socket.io-client';
 import 'quill/dist/quill.snow.css';
-import { useParams } from 'react-router';
+import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
 
+const SAVE_INTERVAL_MS = 2000;
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
@@ -16,7 +17,7 @@ const TOOLBAR_OPTIONS = [
   ['clean'],
 ];
 
-const TextEditor = () => {
+export default function TextEditor() {
   const { id: documentId } = useParams();
   const [socket, setSocket] = useState();
   const [quill, setQuill] = useState();
@@ -39,6 +40,18 @@ const TextEditor = () => {
 
     socket.emit('get-document', documentId);
   }, [socket, quill, documentId]);
+
+  useEffect(() => {
+    if (socket == null || quill == null) return;
+
+    const interval = setInterval(() => {
+      socket.emit('save-document', quill.getContents());
+    }, SAVE_INTERVAL_MS);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [socket, quill]);
 
   useEffect(() => {
     if (socket == null || quill == null) return;
@@ -81,8 +94,5 @@ const TextEditor = () => {
     q.setText('Loading...');
     setQuill(q);
   }, []);
-
-  return <div id="container" ref={wrapperRef}></div>;
-};
-
-export default TextEditor;
+  return <div className="container" ref={wrapperRef}></div>;
+}
